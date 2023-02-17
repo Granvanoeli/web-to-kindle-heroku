@@ -13,7 +13,7 @@ express()
   .get('/', async (req, res) => {
     const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
     const page = await browser.newPage();
-    await page.setViewport({ width: 600, height: 800 });
+    await page.setViewport({ width: 800, height: 600 });
     await page.goto(process.env.SCREENSHOT_URL || 'https://darksky.net/details/40.7127,-74.0059/2021-1-6/us12/en');
     await page.screenshot({
       path: '/tmp/screenshot.png',
@@ -35,7 +35,7 @@ express()
 
 function convert(filename) {
   return new Promise((resolve, reject) => {
-    const args = [filename, '-gravity', 'center', '-extent', '600x800', '-colorspace', 'gray', '-depth', '8', filename];
+    const args = [filename, '-gravity', 'center', '-extent', '800x600', '-colorspace', 'gray', '-depth', '8', filename];
     execFile('convert', args, (error, stdout, stderr) => {
       if (error) {
         console.error({ error, stdout, stderr });
